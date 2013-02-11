@@ -388,8 +388,15 @@ struct private_handle_t {
         return (flags & PRIV_FLAGS_USES_PMEM) != 0;
     }
 
+    static incline bool isAlreadyDeleted(const private_handle_t *hnd) {
+        return (hnd && hnd->magic == 0);
+    }
+
     static int validate(const native_handle* h) {
         const private_handle_t* hnd = (const private_handle_t*)h;
+        if (isAlreadyDeleted(hnd))
+                return -EINVAL;
+
         if (!h || h->version != sizeof(native_handle) ||
                 h->numInts != sNumInts || h->numFds != sNumFds ||
                 hnd->magic != sMagic)
