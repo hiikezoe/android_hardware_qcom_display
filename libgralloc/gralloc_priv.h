@@ -388,7 +388,7 @@ struct private_handle_t {
         return (flags & PRIV_FLAGS_USES_PMEM) != 0;
     }
 
-    static incline bool isAlreadyDeleted(const private_handle_t *hnd) {
+    static inline bool isAlreadyDeleted(const private_handle_t *hnd) {
         return (hnd && hnd->magic == 0);
     }
 
